@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--RTL Unterstüzung(end, start): Unterstüzung von Sprachen, die von Rechts nach Links geschrieben-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:paddingBottom="@dimen/ActivityVPadding"
+    android:paddingEnd="@dimen/ActivityHPadding"
+    android:paddingStart="@dimen/ActivityHPadding"
+    android:paddingTop="@dimen/ActivityVPadding"
     tools:context=".MainActivity">
 
     <TextView
@@ -16,7 +20,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/StartDateTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -30,20 +34,20 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <EditText
-        android:id="@+id/editTextDate2"
+        android:id="@+id/EndDateTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="date" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/StartCommand"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/ButtonStart" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/EndCommand"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/ButtonEnd" />
