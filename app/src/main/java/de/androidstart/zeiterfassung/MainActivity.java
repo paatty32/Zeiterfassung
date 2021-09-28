@@ -9,6 +9,7 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
 
     private Button startCommand;
     private Button endCommand;
+
+    //Klassenvariablen für die Formatierung der Uhrzeit und des Datums
+    private DateFormat dateFormatter;
+    private DateFormat timeFormatter;
 
     @Override
     //Klassicher Konstruktor
@@ -31,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
         endDateTime = findViewById(R.id.EndDateTime);
         startCommand = findViewById(R.id.StartCommand);
         endCommand = findViewById(R.id.EndCommand);
+
+        //Initialisierung
+        //Erfragen der Betriebssystemeinstellung für die Formatierung von Zeit und Datum
+        dateFormatter = android.text.format.DateFormat.getDateFormat(this);
+        timeFormatter = android.text.format.DateFormat.getTimeFormat(this);
 
         //Aktuelle Uhrzeit anzeigen lassen
         //startDatetime.setText(Calendar.getInstance().getTime().toString());
@@ -52,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
 
                 //Datumausgabe in der UI
-                Calendar currentTime = Calendar.getInstance();
-                startDatetime.setText(currentTime.getTime().toString());
+                startDatetime.setText(getCurrentDateTime());
             }
         });
 
@@ -61,14 +70,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Datum ausgabe in der UI
-                Calendar currentEndTime = Calendar.getInstance();
-                endDateTime.setText(currentEndTime.getTime().toString());
+                endDateTime.setText(getCurrentDateTime());
             }
         });
     }
 
-    //Deregistrierung
+    /**
+     * Formatiert die Aktuelle Zeit in ein lesbares Format.
+     * @return Formatierte Uhrzeit und Datum.
+     */
+    private String getCurrentDateTime(){
+        Calendar currentTime = Calendar.getInstance();
+        return String.format("%s %s",
+                dateFormatter.format(currentTime.getTime()), //Anwendung der Fomratierung
+                timeFormatter.format(currentTime.getTime()));
+    }
 
+
+    //Deregistrierung
     @Override
     protected void onPause() {
         super.onPause();
