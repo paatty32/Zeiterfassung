@@ -1,6 +1,8 @@
 package de.androidstart.zeiterfassung;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +13,9 @@ import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+
+import de.androidstart.zeiterfassung.db.WorkTime;
+import de.androidstart.zeiterfassung.db.WorkTimeDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,6 +68,17 @@ public class MainActivity extends AppCompatActivity {
 
                 //Datumausgabe in der UI
                 startDatetime.setText(getCurrentDateTime());
+
+                //In Datenbank speichern
+                WorkTimeDatabase db = Room.databaseBuilder(
+                        MainActivity.this, //Android Context
+                        WorkTimeDatabase.class, //Datentyp der Datenbank
+                        "worktime_data.db" //Namde der Datenbankdatei
+                ).build();
+
+                WorkTime workTime = new WorkTime(); //Entitiy Klasse
+                workTime.startTime = getCurrentDateTime();
+                db.workTimeDao().add(workTime); //Methode aus der DAO aufrufen
             }
         });
 
