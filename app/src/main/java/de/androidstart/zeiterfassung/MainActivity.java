@@ -70,15 +70,15 @@ public class MainActivity extends AppCompatActivity {
                 startDatetime.setText(getCurrentDateTime());
 
                 //In Datenbank speichern
-                WorkTimeDatabase db = Room.databaseBuilder(
-                        MainActivity.this, //Android Context
-                        WorkTimeDatabase.class, //Datentyp der Datenbank
-                        "worktime_data.db" //Namde der Datenbankdatei
-                ).build();
-
-                WorkTime workTime = new WorkTime(); //Entitiy Klasse
-                workTime.startTime = getCurrentDateTime();
-                db.workTimeDao().add(workTime); //Methode aus der DAO aufrufen
+                final TimeTrackingApp app = (TimeTrackingApp) getApplication();
+                app.getExecutors().get_diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        WorkTime workTime = new WorkTime();
+                        workTime.startTime = getCurrentDateTime();
+                        app.getDB().workTimeDao().add(workTime);
+                    }
+                });
             }
         });
 
